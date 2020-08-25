@@ -6,6 +6,9 @@ const chalk = require(`chalk`);
 const run = () => {
   const title = `Help`;
   const text = `
+FAQ:
+service.js <command>
+
 Commands:
 --version               display program version
 --help                  display this faq
