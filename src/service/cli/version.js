@@ -13,4 +13,4 @@ const run = () => {
 module.exports = {
   name: `--version`,
   run,
-}
+};

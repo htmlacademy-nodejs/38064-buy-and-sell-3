@@ -22,4 +22,4 @@ Commands:
 module.exports = {
   name: `--help`,
   run,
-}
+};
