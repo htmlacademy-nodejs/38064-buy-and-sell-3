@@ -72,7 +72,7 @@ const OfferType = {
  * @return {string}
  */
 const getPictureFileName = (number) => {
-  return number > 9 ? `item${number}.jpg` : `item0${number}.jpg`;
+  return `item${number > 9 ? `` : `0`}${number}.jpg`;
 };
 
 /**
