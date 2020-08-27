@@ -67,10 +67,18 @@ const OfferType = {
 };
 
 
+/**
+ * @param {Number} number
+ * @return {string}
+ */
 const getPictureFileName = (number) => {
   return number > 9 ? `item${number}.jpg` : `item0${number}.jpg`;
 };
 
+/**
+ * @param {number} count
+ * @return {Offer[]}
+ */
 const generateOffers = (count = DEFAULT_COUNT) => {
   const descriptionSentencesCount = getRandomInt(1, 5);
   const categoriesCount = getRandomInt(1, Data.CATEGORIES.length);
@@ -85,6 +93,9 @@ const generateOffers = (count = DEFAULT_COUNT) => {
   }));
 };
 
+/**
+ * @param {string[]} args
+ */
 const run = (args) => {
   const [count] = args;
   const countOffer = Number.isInteger(+count) && (+count > 0) ? +count : DEFAULT_COUNT;
@@ -112,3 +123,14 @@ module.exports = {
   name: `--generate`,
   run,
 };
+
+
+/**
+ * @typedef {Object} Offer
+ * @property {string} title
+ * @property {string} description
+ * @property {string} category
+ * @property {string} picture
+ * @property {OfferType.OFFER|OfferType.SALE} type
+ * @property {number} sum
+ */
