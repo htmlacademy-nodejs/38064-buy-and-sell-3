@@ -3,8 +3,9 @@
 const chalk = require(`chalk`);
 
 
+const TITLE = `Help`;
+
 const run = () => {
-  const title = `Help`;
   const text = `
 FAQ:
 service.js <command>
@@ -14,7 +15,7 @@ Commands:
 --help                  display this faq
 --generate <count>      generate file mocks.json`;
 
-  console.log(chalk.cyan(title));
+  console.log(chalk.cyan(TITLE));
   console.log(chalk.green(text));
 };
 
