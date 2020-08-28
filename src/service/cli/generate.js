@@ -6,7 +6,7 @@ const {ExitCode} = require(`../utils/const`);
 const {
   getRandomInt,
   shuffleArray,
-} = require(`../utils/utils`);
+} = require(`src/service/utils/common`);
 
 
 const DEFAULT_COUNT = 1;
