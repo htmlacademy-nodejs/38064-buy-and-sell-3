@@ -6,7 +6,7 @@ const {ExitCode} = require(`../utils/const`);
 const {
   getRandomInt,
   shuffleArray,
-} = require(`src/service/utils/common`);
+} = require(`../utils/common`);
 
 
 const DEFAULT_COUNT = 1;
@@ -62,6 +62,11 @@ const PictureRestrict = {
   MAX: 16,
 };
 
+const DescriptionRestrict = {
+  MIN: 1,
+  MAX: 5,
+};
+
 const OfferType = {
   OFFER: `offer`,
   SALE: `sale`,
@@ -81,17 +86,19 @@ const getPictureFileName = (number) => {
  * @return {Offer[]}
  */
 const generateOffers = (count = DEFAULT_COUNT) => {
-  const descriptionSentencesCount = getRandomInt(1, 5);
-  const categoriesCount = getRandomInt(1, Data.CATEGORIES.length);
+  return Array(count).fill({}).map(() => {
+    const descriptionSentencesCount = getRandomInt(DescriptionRestrict.MIN, DescriptionRestrict.MAX);
+    const categoriesCount = getRandomInt(1, Data.CATEGORIES.length);
 
-  return Array(count).fill({}).map(() => ({
-    title: Data.TITLES[getRandomInt(0, Data.TITLES.length - 1)],
-    description: shuffleArray(Data.DESCRIPTIONS).slice(0, descriptionSentencesCount).join(` `),
-    category: shuffleArray(Data.CATEGORIES).slice(0, categoriesCount),
-    picture: getPictureFileName(getRandomInt(PictureRestrict.MIN, PictureRestrict.MAX)),
-    type: Object.values(OfferType)[getRandomInt(0, 1)],
-    sum: getRandomInt(SumRestrict.MIN, SumRestrict.MAX),
-  }));
+    return {
+      title: Data.TITLES[getRandomInt(0, Data.TITLES.length - 1)],
+      description: shuffleArray(Data.DESCRIPTIONS).slice(0, descriptionSentencesCount).join(` `),
+      category: shuffleArray(Data.CATEGORIES).slice(0, categoriesCount),
+      picture: getPictureFileName(getRandomInt(PictureRestrict.MIN, PictureRestrict.MAX)),
+      type: Object.values(OfferType)[getRandomInt(0, 1)],
+      sum: getRandomInt(SumRestrict.MIN, SumRestrict.MAX),
+    };
+  });
 };
 
 /**
