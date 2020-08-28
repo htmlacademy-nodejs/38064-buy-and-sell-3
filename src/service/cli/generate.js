@@ -10,6 +10,7 @@ const {
 
 
 const DEFAULT_COUNT = 1;
+const MAX_COUNT = 1000;
 const FILE_NAME = `mocks.json`;
 
 const Data = {
@@ -100,8 +101,8 @@ const run = (args) => {
   const [count] = args;
   const countOffer = Number.isInteger(+count) && (+count > 0) ? +count : DEFAULT_COUNT;
 
-  if (countOffer > 1000) {
-    console.error(chalk.red(`Offers number must not exceed 1000`));
+  if (countOffer > MAX_COUNT) {
+    console.error(chalk.red(`Offers number must not exceed ${MAX_COUNT}`));
     process.exit(ExitCode.ERROR);
   }
 
