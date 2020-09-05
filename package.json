@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/nikopol-fw/38064-buy-and-sell-3#readme",
   "devDependencies": {
-    "eslint": "7.7.0",
+    "eslint": "7.8.1",
     "eslint-config-htmlacademy": "0.5.2"
   },
   "dependencies": {
