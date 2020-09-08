@@ -10,45 +10,6 @@ const DEFAULT_COUNT = 1;
 const MAX_COUNT = 1000;
 const FILE_NAME = `mocks.json`;
 
-const Data = {
-  TITLES: [
-    `Продам книги Стивена Кинга.`,
-    `Продам новую приставку Sony Playstation 5.`,
-    `Продам отличную подборку фильмов на VHS.`,
-    `Куплю антиквариат.`,
-    `Куплю породистого кота.`,
-    `Продам коллекцию журналов «Огонёк».`,
-    `Отдам в хорошие руки подшивку «Мурзилка».`,
-    `Продам советскую посуду. Почти не разбита.`,
-    `Куплю детские санки.`,
-  ],
-  DESCRIPTIONS: [
-    `Товар в отличном состоянии.`,
-    `Пользовались бережно и только по большим праздникам.`,
-    `Продаю с болью в сердце...`,
-    `Бонусом отдам все аксессуары.`,
-    `Даю недельную гарантию.`,
-    `Если товар не понравится — верну всё до последней копейки.`,
-    `Это настоящая находка для коллекционера!`,
-    `Если найдёте дешевле — сброшу цену.`,
-    `Таких предложений больше нет!`,
-    `Две страницы заляпаны свежим кофе.`,
-    `При покупке с меня бесплатная доставка в черте города.`,
-    `Кажется, что это хрупкая вещь.`,
-    `Мой дед не мог её сломать.`,
-    `Кому нужен этот новый телефон, если тут такое...`,
-    `Не пытайтесь торговаться. Цену вещам я знаю.`,
-  ],
-  CATEGORIES: [
-    `Книги`,
-    `Разное`,
-    `Посуда`,
-    `Игры`,
-    `Животные`,
-    `Журналы`,
-  ],
-};
-
 const SumRestrict = {
   MIN: 1000,
   MAX: 100000,
@@ -69,6 +30,12 @@ const OfferType = {
   SALE: `sale`,
 };
 
+const ContentFile = {
+  TITLES: `./data/titles.txt`,
+  CATEGORIES: `./data/categories.txt`,
+  SENTENCES: `./data/sentences.txt`,
+};
+
 
 /**
  * @param {Number} number
@@ -80,17 +47,20 @@ const getPictureFileName = (number) => {
 
 /**
  * @param {number} count
+ * @param {string[]} titles
+ * @param {string[]} sentences
+ * @param {string[]} categories
  * @return {Offer[]}
  */
-const generateOffers = (count = DEFAULT_COUNT) => {
+const generateOffers = (count = DEFAULT_COUNT, titles, sentences, categories) => {
   return Array(count).fill({}).map(() => {
     const descriptionSentencesCount = getRandomInt(DescriptionRestrict.MIN, DescriptionRestrict.MAX);
-    const categoriesCount = getRandomInt(1, Data.CATEGORIES.length);
+    const categoriesCount = getRandomInt(1, categories.length);
 
     return {
-      title: Data.TITLES[getRandomInt(0, Data.TITLES.length - 1)],
-      description: shuffleArray(Data.DESCRIPTIONS).slice(0, descriptionSentencesCount).join(` `),
-      category: shuffleArray(Data.CATEGORIES).slice(0, categoriesCount),
+      title: titles[getRandomInt(0, titles.length - 1)],
+      description: shuffleArray(sentences).slice(0, descriptionSentencesCount).join(` `),
+      category: shuffleArray(categories).slice(0, categoriesCount),
       picture: getPictureFileName(getRandomInt(PictureRestrict.MIN, PictureRestrict.MAX)),
       type: Object.values(OfferType)[getRandomInt(0, 1)],
       sum: getRandomInt(SumRestrict.MIN, SumRestrict.MAX),
@@ -99,9 +69,29 @@ const generateOffers = (count = DEFAULT_COUNT) => {
 };
 
 /**
+ * @param {string} filePath
+ * @return {Promise<string[]>}
+ */
+const readContent = async (filePath) => {
+  try {
+    const content = await fs.readFile(filePath, `utf-8`);
+    return content.split(`\n`);
+  } catch (err) {
+    console.error(chalk.red(err));
+    return [];
+  }
+};
+
+/**
  * @param {string[]} args
  */
 const run = async (args) => {
+  const [titles, sentences, categories] = await Promise.all([
+    readContent(ContentFile.TITLES),
+    readContent(ContentFile.SENTENCES),
+    readContent(ContentFile.CATEGORIES),
+  ]);
+
   const [count] = args;
   const countOffer = Number.isInteger(+count) && (+count > 0) ? +count : DEFAULT_COUNT;
 
@@ -110,7 +100,7 @@ const run = async (args) => {
     process.exit(ExitCode.ERROR);
   }
 
-  const content = JSON.stringify(generateOffers(countOffer));
+  const content = JSON.stringify(generateOffers(countOffer, titles, sentences, categories));
 
   try {
     await fs.writeFile(FILE_NAME, content, `utf-8`);
