@@ -3,18 +3,11 @@
 const chalk = require(`chalk`);
 const http = require(`http`);
 const fs = require(`fs`).promises;
+const {HttpCode} = require(`../../utils/const`);
 
 
 const DEFAULT_PORT = 3000;
 const FILE_NAME = `./mocks.json`;
-
-const HttpCode = {
-  OK: 200,
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
-  NOT_FOUND: 404,
-  INTERNAL_SERVER_ERROR: 500,
-};
 
 /**
  * @param {IncomingMessage} req
@@ -36,7 +29,10 @@ const onClientConnect = async (req, res) => {
       } catch (err) {
         sendResponse(res, HttpCode.NOT_FOUND, notFoundMessage);
       }
+      break;
 
+    default:
+      sendResponse(res, HttpCode.NOT_FOUND, notFoundMessage);
       break;
   }
 };
@@ -75,8 +71,12 @@ const run = (args) => {
 
   http.createServer(onClientConnect)
     .listen(port)
-    .on(`listening`, () => {
-      return console.log(chalk.cyan(`I'm listening on port ${port}`));
+    .on(`listening`, (err) => {
+      if (err) {
+        return console.error(chalk.red(`An error occurred while creating a Server:`), err);
+      }
+
+      return console.info(chalk.cyan(`Listening on port ${port} ...`));
     });
 };
 
