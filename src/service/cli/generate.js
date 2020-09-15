@@ -2,8 +2,8 @@
 
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
-const {ExitCode} = require(`../utils/const`);
-const {getRandomInt, shuffleArray} = require(`../utils/common`);
+const {ExitCode} = require(`../../utils/const`);
+const {getRandomInt, shuffleArray} = require(`../../utils/common`);
 
 
 const DEFAULT_COUNT = 1;
