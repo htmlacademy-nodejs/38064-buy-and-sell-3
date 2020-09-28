@@ -12,7 +12,7 @@ const FILE_NAME = `./mocks.json`;
 const app = express();
 app.use(express.json());
 
-app.get(`/`, async (req, res) => {
+app.get(`/offers`, async (req, res) => {
   try {
     const fileContent = await fs.readFile(FILE_NAME, `utf-8`);
     /** @type {Offer[]} */
