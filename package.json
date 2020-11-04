@@ -21,14 +21,15 @@
   },
   "homepage": "https://github.com/nikopol-fw/38064-buy-and-sell-3#readme",
   "devDependencies": {
-    "eslint": "7.9.0",
+    "eslint": "7.12.1",
     "eslint-config-htmlacademy": "0.6.0",
     "html2pug": "4.0.0",
-    "nodemon": "2.0.4"
+    "nodemon": "2.0.6"
   },
   "dependencies": {
     "chalk": "4.1.0",
     "express": "4.17.1",
+    "nanoid": "3.1.16",
     "pug": "3.0.0"
   }
 }
