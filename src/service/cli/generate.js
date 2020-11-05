@@ -3,14 +3,13 @@
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
 const {nanoid} = require(`nanoid`);
-const {ExitCode} = require(`../../utils/const`);
+const {ID_LENGTH, ExitCode} = require(`../../utils/const`);
 const {getRandomInt, shuffleArray} = require(`../../utils/common`);
 
 
 const DEFAULT_COUNT = 1;
 const MAX_COUNT = 1000;
 const FILE_NAME = `mocks.json`;
-const ID_LENGTH = 6;
 const MAX_COMMENT_COUNT = 5;
 
 const SumRestrict = {
@@ -155,4 +154,14 @@ module.exports = {
  * @property {OfferType} type
  * @property {number} sum
  * @property {Comment[]} comments
+ */
+
+/**
+ * @typedef {Object} LocalOffer
+ * @property {string} title
+ * @property {string} description
+ * @property {string[]} category
+ * @property {string} picture
+ * @property {OfferType} type
+ * @property {number} sum
  */
