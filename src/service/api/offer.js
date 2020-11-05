@@ -74,7 +74,7 @@ const initOfferController = (controller, offerService, commentService) => {
     const deletedComment = commentService.delete(offer, commentId);
 
     if (!deletedComment) {
-      res.statusCode(HttpCode.NOT_FOUND).send(`Not found comment with id: ${commentId}`);
+      res.status(HttpCode.NOT_FOUND).send(`Not found comment with id: ${commentId}`);
     }
 
     return res.status(HttpCode.OK).json(deletedComment);
