@@ -14,7 +14,7 @@ class SearchService {
    * @return {Offer[]}
    */
   find(searchText) {
-    return this._offers.filter((offer) => offer.title.includes(searchText));
+    return this._offers.filter((offer) => offer.title.toLowerCase().includes(searchText.toLowerCase()));
   }
 
 }
