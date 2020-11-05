@@ -13,6 +13,9 @@ class OfferService {
     this._offers = offers;
   }
 
+  /**
+   * @return {Offer[]}
+   */
   get offers() {
     return this._offers;
   }
