@@ -145,6 +145,11 @@ module.exports = {
  */
 
 /**
+ * @typedef {Object} LocalComment
+ * @property {string} text
+ */
+
+/**
  * @typedef {Object} Offer
  * @property {string} id
  * @property {string} title

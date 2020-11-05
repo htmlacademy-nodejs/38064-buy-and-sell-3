@@ -3,13 +3,16 @@
 const express = require(`express`);
 const {HttpCode} = require(`../../utils/const`);
 const offerValidator = require(`../middlewares/offer-validator`);
+const commentValidator = require(`../middlewares/comment-validator`);
+const getOfferExistValidator = require(`../middlewares/offer-exists`);
 
 
 /**
  * @param {Router} controller
  * @param {OfferService} offerService
+ * @param {CommentService} commentService
  */
-const initOfferController = (controller, offerService) => {
+const initOfferController = (controller, offerService, commentService) => {
   const offerController = new express.Router();
 
   controller.use(`/offers`, offerController);
@@ -57,6 +60,33 @@ const initOfferController = (controller, offerService) => {
 
     return res.status(HttpCode.OK).json(deletedOffer);
   });
+
+  offerController.get(`/:id/comments`, getOfferExistValidator(offerService), (req, res) => {
+    const {offer} = res.locals;
+    const comments = commentService.getAll(offer);
+
+    res.status(HttpCode.OK).json(comments);
+  });
+
+  offerController.delete(`/:id/comments/:commentId`, getOfferExistValidator(offerService), (req, res) => {
+    const {offer} = res.locals;
+    const {commentId} = req.params;
+    const deletedComment = commentService.delete(offer, commentId);
+
+    if (!deletedComment) {
+      res.statusCode(HttpCode.NOT_FOUND).send(`Not found comment with id: ${commentId}`);
+    }
+
+    return res.status(HttpCode.OK).json(deletedComment);
+  });
+
+  offerController.post(`/:id/comments`, [getOfferExistValidator(offerService), commentValidator], (req, res) => {
+    const {offer} = res.locals;
+    const newComment = commentService.create(offer, req.body);
+
+    return res.status(HttpCode.CREATED).json(newComment);
+  });
 };
+
 
 module.exports = initOfferController;
