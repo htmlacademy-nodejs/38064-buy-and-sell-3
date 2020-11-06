@@ -54,7 +54,7 @@ const getPictureFileName = (number) => {
  */
 const generateComments = (sentences) => {
   const count = getRandomInt(1, MAX_COMMENT_COUNT);
-  return Array(count).fill({}).map(() => ({
+  return Array(count).fill(null).map(() => ({
     id: nanoid(ID_LENGTH),
     text: shuffleArray(sentences.slice()).slice(0, getRandomInt(1, sentences.length)).join(` `),
   }));

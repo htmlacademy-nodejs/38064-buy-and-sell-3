@@ -15,7 +15,7 @@ const initCategoryController = (controller, categoryService) => {
 
   categoryController.get(`/`, (req, res) => {
     const categories = categoryService.categories;
-    res.status(HttpCode.OK).json(categories);
+    return res.status(HttpCode.OK).json(categories);
   });
 };
 

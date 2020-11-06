@@ -19,7 +19,7 @@ const initOfferController = (controller, offerService, commentService) => {
 
   offerController.get(`/`, (req, res) => {
     const offers = offerService.offers;
-    res.status(HttpCode.OK).json(offers);
+    return res.status(HttpCode.OK).json(offers);
   });
 
   offerController.get(`/:id`, (req, res) => {
@@ -65,7 +65,7 @@ const initOfferController = (controller, offerService, commentService) => {
     const {offer} = res.locals;
     const comments = commentService.getAll(offer);
 
-    res.status(HttpCode.OK).json(comments);
+    return res.status(HttpCode.OK).json(comments);
   });
 
   offerController.delete(`/:id/comments/:commentId`, getOfferExistValidator(offerService), (req, res) => {
@@ -74,7 +74,7 @@ const initOfferController = (controller, offerService, commentService) => {
     const deletedComment = commentService.delete(offer, commentId);
 
     if (!deletedComment) {
-      res.status(HttpCode.NOT_FOUND).send(`Not found comment with id: ${commentId}`);
+      return res.status(HttpCode.NOT_FOUND).send(`Not found comment with id: ${commentId}`);
     }
 
     return res.status(HttpCode.OK).json(deletedComment);
