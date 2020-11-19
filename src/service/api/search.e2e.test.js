@@ -49,15 +49,14 @@ const app = express();
 app.use(express.json());
 initSearchController(app, new SearchService(mockData));
 
+
 describe(`API returns offer based on search query`, () => {
   let response;
 
   beforeAll(async () => {
-    response = await request(app)
-      .get(`/search`)
-      .query({
-        query: `Куплю породистого кота`,
-      });
+    response = await request(app).get(`/search`).query({
+      query: `Куплю породистого кота`,
+    });
   });
 
   test(`Status code 200`, () => expect(response.statusCode).toBe(HttpCode.OK));
