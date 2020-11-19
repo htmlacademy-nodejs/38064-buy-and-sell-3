@@ -1,7 +1,7 @@
 # Учебный проект «Куплю. Продам» [![Build status][travis-image]][travis-url]
 
 * Студент: [Николай Думчев](https://up.htmlacademy.ru/nodejs/3/user/38064).
-* Наставник: [Bodya Tsap](https://htmlacademy.ru/profile/id1406771).
+* Наставник: [Сергей Рожков](https://htmlacademy.ru/profile/id1069033).
 
 ---
 
