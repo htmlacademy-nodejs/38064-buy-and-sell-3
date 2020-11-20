@@ -22,6 +22,7 @@ const initOfferController = (controller, offerService, commentService) => {
     return res.status(HttpCode.OK).json(offers);
   });
 
+
   offerController.get(`/:id`, (req, res) => {
     const {id} = req.params;
     const offer = offerService.getById(id);
@@ -33,11 +34,13 @@ const initOfferController = (controller, offerService, commentService) => {
     return res.status(HttpCode.OK).json(offer);
   });
 
+
   offerController.post(`/`, offerValidator, (req, res) => {
     const offer = offerService.create(req.body);
 
     return res.status(HttpCode.CREATED).json(offer);
   });
+
 
   offerController.put(`/:id`, offerValidator, (req, res) => {
     const {id} = req.params;
