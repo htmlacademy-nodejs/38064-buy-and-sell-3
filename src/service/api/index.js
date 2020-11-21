@@ -2,7 +2,7 @@
 
 const express = require(`express`);
 const getMockData = require(`../lib/get-mock-data`);
-const initOfferController = require(`./offer`);
+const initOfferController = require(`./offers`);
 const initCategoryController = require(`./category`);
 const initSearchController = require(`./search`);
 const {OfferService, CategoryService, CommentService, SearchService} = require(`../data-service`);

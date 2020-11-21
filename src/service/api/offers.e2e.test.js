@@ -2,10 +2,10 @@
 
 const express = require(`express`);
 const request = require(`supertest`);
-const initOfferController = require(`./offer`);
+const initOfferController = require(`./offers`);
 const {HttpCode} = require(`../../utils/const`);
 const {OfferService, CommentService} = require(`../data-service`);
-const mockData = require(`./offer.e2e.test.mock.json`);
+const mockData = require(`./offers.e2e.test.mock.json`);
 
 
 /**
@@ -53,7 +53,7 @@ test(`API returns code 404 if there is no offer with given id`, () => {
   const app = createAPI();
 
   return request(app)
-    .get(`/offers/PvNAFq`)
+    .get(`/offers/NO_EXIST`)
     .expect(HttpCode.NOT_FOUND);
 });
 
@@ -80,7 +80,7 @@ describe(`API creates an offer if data is valid`, () => {
 
   test(`Returns the created offer`, () => expect(response.body).toEqual(expect.objectContaining(newOffer)));
 
-  test(`The Offers number has changed`, () => request(app)
+  test(`The offers number has changed`, () => request(app)
     .get(`/offers`)
     .expect((res) => expect(res.body.length).toBe(4))
   );
@@ -199,9 +199,9 @@ describe(`API returns a list of comments to given offer`, () => {
 
   test(`Status code 200`, () => expect(response.statusCode).toBe(HttpCode.OK));
 
-  test(`returns list with 3 comments`, () => expect(response.body.length).toBe(3));
+  test(`Returns list with 3 comments`, () => expect(response.body.length).toBe(3));
 
-  test(`First comments's id is "7rwCb3"`, () => expect(response.body[0].id).toBe(`7rwCb3`));
+  test(`First comment's id is "7rwCb3"`, () => expect(response.body[0].id).toBe(`7rwCb3`));
 });
 
 
