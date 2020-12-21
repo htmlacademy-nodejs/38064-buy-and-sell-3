@@ -9,6 +9,9 @@ html(lang='ru')
     link(rel='stylesheet' href='/css/style.min.css')
 
   body
+    mixin ticketCardLabel(type)
+      span(class!=attributes.class || 'ticket-card__label') #{type === 'offer' ? 'Куплю' : 'Продам'}
+
     include header.pug
     block content
     include footer.pug

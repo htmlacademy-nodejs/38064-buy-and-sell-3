@@ -14,7 +14,7 @@ class CategoryService {
    */
   get categories() {
     const categories = this._offers.reduce((acc, offer) => {
-      offer.category.forEach((category) => acc.add(category));
+      offer.categories.forEach((category) => acc.add(category));
       return acc;
     }, new Set());
     return [...categories];
