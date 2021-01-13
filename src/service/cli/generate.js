@@ -165,7 +165,7 @@ module.exports = {
  * @typedef {Object} LocalOffer
  * @property {string} title
  * @property {string} description
- * @property {string[]} category
+ * @property {string[]} categories
  * @property {string} picture
  * @property {OfferType} type
  * @property {number} sum

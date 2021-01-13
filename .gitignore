@@ -14,3 +14,7 @@ src/service/logs
 
 # Собранные файлы проекта
 mocks.json
+
+# Загруженные изображения
+src/express/upload/img/*.*
+!src/express/upload/img/.gitkeep

@@ -66,7 +66,7 @@ describe(`API creates an offer if data is valid`, () => {
   const newOffer = {
     title: `Научу программировать`,
     description: `Большой опыт разработки. Дружеское отношение. Духовное наставничество`,
-    category: `Обучение`,
+    categories: `Обучение`,
     picture: `item03.jpg`,
     type: `offer`,
     sum: 10000,
@@ -109,7 +109,7 @@ describe(`API changes existent offer`, () => {
   const newOffer = {
     title: `Продам отличную подборку фильмов на VHS и DVD!`,
     description: `Это настоящая находка для коллекционера!`,
-    category: [`Игры`, `Книги`, `Новинки`, `Посуда`, `Разное`],
+    categories: [`Игры`, `Книги`, `Новинки`, `Посуда`, `Разное`],
     picture: `item08.jpg`,
     type: `sale`,
     sum: 33515,
@@ -149,7 +149,7 @@ test(`API returns status code 404 when trying to change non-existent offer`, () 
   const newOffer = {
     title: `Продам отличную подборку фильмов на VHS и DVD в несуществующем объявлении!`,
     description: `Это настоящая находка для коллекционера!`,
-    category: [`Игры`, `Книги`, `Новинки`, `Посуда`, `Разное`],
+    categories: [`Игры`, `Книги`, `Новинки`, `Посуда`, `Разное`],
     picture: `item08.jpg`,
     type: `sale`,
     sum: 33515,
