@@ -9,21 +9,21 @@ const myRouter = new express.Router();
 myRouter.get(`/comments`, async (req, res) => {
   let offers;
   try {
-    const response = await api.get(`/offers`);
-    offers = response.data;
+    offers = await api.getOffers();
   } catch (err) {
     offers = [];
   }
 
-  res.render(`comments`, {offers: offers.slice(0, 3)});
+  offers = offers.slice(0, 3);
+
+  res.render(`comments`, {offers});
 });
 
 
 myRouter.get(`/`, async (req, res) => {
   let offers;
   try {
-    const response = await api.get(`/offers`);
-    offers = response.data;
+    offers = await api.getOffers();
   } catch (err) {
     offers = [];
   }

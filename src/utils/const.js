@@ -22,6 +22,10 @@ const HttpCode = {
   INTERNAL_SERVER_ERROR: 500,
 };
 
+const HttpMethod = {
+  POST: `POST`,
+};
+
 const Env = {
   DEVELOPMENT: `development`,
   PRODUCTION: `production`,
@@ -35,5 +39,6 @@ module.exports = {
   ID_LENGTH,
   ExitCode,
   HttpCode,
+  HttpMethod,
   Env,
 };

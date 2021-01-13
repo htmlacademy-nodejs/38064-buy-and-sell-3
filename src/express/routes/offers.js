@@ -21,17 +21,18 @@ const uploadFormData = multer({storage});
 
 const offersRouter = new express.Router();
 
+
 offersRouter.get(`/add`, async (req, res) => {
   let categories;
   try {
-    const response = await api.get(`/category`);
-    categories = response.data;
+    categories = await api.getCategories();
   } catch (error) {
     categories = [];
   }
 
   res.render(`offers/new-ticket`, {categories});
 });
+
 
 offersRouter.post(`/add`, uploadFormData.single(`avatar`), async (req, res) => {
   const {body, file} = req;
@@ -47,13 +48,12 @@ offersRouter.post(`/add`, uploadFormData.single(`avatar`), async (req, res) => {
   };
 
   try {
-    await api.post(`/offers`, newOffer);
+    await api.createOffer(newOffer);
     res.redirect(`/my`);
   } catch (error) {
     let categories;
     try {
-      const response = await api.get(`/category`);
-      categories = response.data;
+      categories = await api.getCategories();
     } catch (err) {
       categories = [];
     }
@@ -62,18 +62,22 @@ offersRouter.post(`/add`, uploadFormData.single(`avatar`), async (req, res) => {
   }
 });
 
+
 offersRouter.get(`/edit/:id`, async (req, res) => {
   const {id} = req.params;
-  const response = await Promise.all([
-    await api.get(`/offers/${id}`),
-    await api.get(`/category`),
-  ]);
-  const [offerResponse, categoriesResponse] = response;
-  const offer = offerResponse.data;
-  const categories = categoriesResponse.data;
 
-  res.render(`offers/ticket-edit`, {offer, categories});
+  try {
+    const [offer, categories] = await Promise.all([
+      await api.getOfferById(id),
+      await api.getCategories(),
+    ]);
+
+    res.render(`offers/ticket-edit`, {offer, categories});
+  } catch (error) {
+    // TODO написать обработку ошибки запроса данных для страницы /offers/edit/:id
+  }
 });
+
 
 offersRouter.get(`/category/:id`, (req, res) => res.render(`offers/category`));
 offersRouter.get(`/:id`, (req, res) => res.render(`offers/ticket`));

@@ -15,12 +15,7 @@ mainRouter.get(`/search`, async (req, res) => {
 
   let offers;
   try {
-    const response = await api.get(`/search`, {
-      params: {
-        query: searchQuery,
-      }
-    });
-    offers = response.data;
+    offers = await api.searchForOffers(searchQuery);
   } catch (error) {
     offers = [];
   }
@@ -32,8 +27,7 @@ mainRouter.get(`/search`, async (req, res) => {
 mainRouter.get(`/`, async (req, res) => {
   let offers;
   try {
-    const response = await api.get(`/offers`);
-    offers = response.data;
+    offers = await api.getOffers();
   } catch (err) {
     offers = [];
   }
