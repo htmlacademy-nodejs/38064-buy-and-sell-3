@@ -50,21 +50,7 @@ block content
         ul
           each offer in offers
             li.tickets-list__item
-              div.ticket-card.ticket-card--color01
-                div.ticket-card__img
-                  img(src=`img/${offer.picture}` alt='')
-                div.ticket-card__info
-                  +ticketCardLabel(offer.type)
-                  div.ticket-card__categories
-                    each category in offer.categories
-                      a(href='#') #{category}
-                  div.ticket-card__header
-                    h3.ticket-card__title
-                      a(href='#') #{offer.title}
-                    p.ticket-card__price
-                      span.js-sum #{offer.sum} ₽
-                  div.ticket-card__desc
-                    p #{offer.description}
+              +offerCard(offer)
 
     section.tickets-list
       h2.visually-hidden Самые обсуждаемые предложения

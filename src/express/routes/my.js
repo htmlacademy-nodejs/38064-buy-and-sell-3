@@ -18,6 +18,7 @@ myRouter.get(`/comments`, async (req, res) => {
   res.render(`comments`, {offers: offers.slice(0, 3)});
 });
 
+
 myRouter.get(`/`, async (req, res) => {
   let offers;
   try {

@@ -8,7 +8,26 @@ const mainRouter = new express.Router();
 
 mainRouter.get(`/login`, (req, res) => res.render(`login`));
 mainRouter.get(`/register`, (req, res) => res.render(`sign-up`));
-mainRouter.get(`/search`, (req, res) => res.render(`search-result`));
+
+
+mainRouter.get(`/search`, async (req, res) => {
+  const {search: searchQuery} = req.query;
+
+  let offers;
+  try {
+    const response = await api.get(`/search`, {
+      params: {
+        query: searchQuery,
+      }
+    });
+    offers = response.data;
+  } catch (error) {
+    offers = [];
+  }
+
+  res.render(`search-result`, {offers});
+});
+
 
 mainRouter.get(`/`, async (req, res) => {
   let offers;

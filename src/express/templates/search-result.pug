@@ -6,39 +6,15 @@ block content
       h1.visually-hidden Результаты поиска
       div.search-results__wrapper
         p.search-results__label Найдено 
-          span.js-results 2 публикации
+          // TODO добавить склонение слова "публикации"
+          span.js-results #{offers.length} публикации
+        // TODO уточнить о количестве выводимых публикаций и допилить вывод списка в соответствии с требованиями
         ul.search-results__list
-          li.search-results__item
-            div.ticket-card.ticket-card--color05
-              div.ticket-card__img
-                img(src='img/item05.jpg' srcset='img/item05@2x.jpg 2x' alt='Изображение товара')
-              div.ticket-card__info
-                span.ticket-card__label ПРОДАМ
-                div.ticket-card__categories
-                  a(href='#') Авто
-                div.ticket-card__header
-                  h3.ticket-card__title
-                    a(href='#') Ленд Ровер
-                  p.ticket-card__price
-                    span.js-sum 900 000 ₽
-                div.ticket-card__desc
-                  p Куплю монстеру зеленую в хорошем зеленом состоянии, буду поливать...
-          li.search-results__item
-            div.ticket-card.ticket-card--color16
-              div.ticket-card__img
-                img(src='img/item16.jpg' srcset='img/item16@2x.jpg 2x' alt='Изображение товара')
-              div.ticket-card__info
-                span.ticket-card__label ПРОДАМ
-                div.ticket-card__categories
-                  a(href='#') Авто
-                div.ticket-card__header
-                  h3.ticket-card__title
-                    a(href='#') Хонда
-                  p.ticket-card__price
-                    span.js-sum 100 000 ₽
-                div.ticket-card__desc
-                  p Куплю монстеру зеленую в хорошем зеленом состоянии, буду поливать...
+          each offer in offers
+            li.search-results__item
+              +offerCard(offer)
 
+    // TODO реализовать секцию "Самые новые предложения"
     section.tickets-list
       h2.visually-hidden Самые новые предложения
       div.tickets-list__wrapper

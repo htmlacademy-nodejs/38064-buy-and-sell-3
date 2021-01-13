@@ -8,7 +8,7 @@ header.header
           a(href='my-tickets.html') Публикации
         li.header__item
           a(href='comments.html') Комментарии
-    form.search(method='get' action='#' autocomplete='off')
+    form.search(action='/search' method='get' enctype='multipart/form-data' autocomplete='off')
       input(type='search' name='search' placeholder='Поиск' aria-label='Поиск')
       div.search__icon
       div.search__close-btn
