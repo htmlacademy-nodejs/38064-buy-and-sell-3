@@ -20,17 +20,6 @@ class API {
   }
 
   /**
-   * @param {string} url
-   * @param {AxiosRequestConfig?} options
-   * @return {any}
-   * @private
-   */
-  async _load(url, options) {
-    const response = await this._http.request({url, ...options});
-    return response.data;
-  }
-
-  /**
    * @return {Offer[]}
    */
   getOffers() {
@@ -71,6 +60,17 @@ class API {
     return this._load(`/search`, {
       params: {query},
     });
+  }
+
+  /**
+   * @param {string} url
+   * @param {AxiosRequestConfig?} options
+   * @return {any}
+   * @private
+   */
+  async _load(url, options) {
+    const response = await this._http.request({url, ...options});
+    return response.data;
   }
 
 }
