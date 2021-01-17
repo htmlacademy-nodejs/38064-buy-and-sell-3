@@ -77,7 +77,7 @@ const generateOffers = (count = DEFAULT_COUNT, titles, sentences, categories, co
       id: nanoid(ID_LENGTH),
       title: titles[getRandomInt(0, titles.length - 1)],
       description: shuffleArray(sentences).slice(0, descriptionSentencesCount).join(` `),
-      category: shuffleArray(categories).slice(0, categoriesCount),
+      categories: shuffleArray(categories).slice(0, categoriesCount),
       picture: getPictureFileName(getRandomInt(PictureRestrict.MIN, PictureRestrict.MAX)),
       type: Object.values(OfferType)[getRandomInt(0, 1)],
       sum: getRandomInt(SumRestrict.MIN, SumRestrict.MAX),
@@ -154,7 +154,7 @@ module.exports = {
  * @property {string} id
  * @property {string} title
  * @property {string} description
- * @property {string[]} category
+ * @property {string[]} categories
  * @property {string} picture
  * @property {OfferType} type
  * @property {number} sum
@@ -165,7 +165,7 @@ module.exports = {
  * @typedef {Object} LocalOffer
  * @property {string} title
  * @property {string} description
- * @property {string[]} category
+ * @property {string[]} categories
  * @property {string} picture
  * @property {OfferType} type
  * @property {number} sum

@@ -2,66 +2,11 @@
 
 const express = require(`express`);
 const request = require(`supertest`);
-const initOfferController = require(`./offer`);
+const initOfferController = require(`./offers`);
 const {HttpCode} = require(`../../utils/const`);
 const {OfferService, CommentService} = require(`../data-service`);
+const mockData = require(`./offers.e2e.test.mock.json`);
 
-
-const mockData = [{
-  "id": `JImQFL`,
-  "title": `Продам книги Стивена Кинга.`,
-  "description": `Не пытайтесь торговаться. Цену вещам я знаю.`,
-  "category": [`Журналы`, `Посуда`, `Книги`, `Животные`, `Разное`],
-  "picture": `item14.jpg`,
-  "type": `offer`,
-  "sum": 8357,
-  "comments": [{
-    "id": `7rwCb3`,
-    "text": `Совсем немного... Неплохо, но дорого. Вы что?! В магазине дешевле. А где блок питания?`,
-  }, {
-    "id": `V3VjkR`,
-    "text": `Вы что?! В магазине дешевле. Почему в таком ужасном состоянии? А сколько игр в комплекте?`,
-  }, {
-    "id": `qkyUml`,
-    "text": `А где блок питания? Продаю в связи с переездом. Отрываю от сердца.`,
-  }],
-}, {
-  "id": `AuTBEB`,
-  "title": `Куплю породистого кота.`,
-  "description": `При покупке с меня бесплатная доставка в черте города. Продаю с болью в сердце... Две страницы заляпаны свежим кофе.`,
-  "category": [`Посуда`, `Журналы`, `Игры`, `Новинки`, `Разное`, `Книги`],
-  "picture": `item01.jpg`,
-  "type": `offer`,
-  "sum": 60038,
-  "comments": [{
-    "id": `7vOOM5`,
-    "text": `Вы что?! В магазине дешевле. А сколько игр в комплекте?`,
-  }, {
-    "id": `CfAVOw`,
-    "text": `Совсем немного... Вы что?! В магазине дешевле. А где блок питания? Оплата наличными или перевод на карту? Почему в таком ужасном состоянии?`,
-  }, {
-    "id": `CFy-JL`,
-    "text": `Совсем немного... Продаю в связи с переездом. Отрываю от сердца. Неплохо, но дорого.`,
-  }],
-}, {
-  "id": `-TrAHG`,
-  "title": `Продам отличную подборку фильмов на VHS.`,
-  "description": `Это настоящая находка для коллекционера!`,
-  "category": [`Игры`, `Книги`, `Новинки`, `Посуда`, `Разное`],
-  "picture": `item08.jpg`,
-  "type": `sale`,
-  "sum": 33515,
-  "comments": [{
-    "id": `DJtnTw-`,
-    "text": `Продаю в связи с переездом. Отрываю от сердца. Вы что?! В магазине дешевле. Неплохо, но дорого. С чем связана продажа? Почему так дешёво? Оплата наличными или перевод на карту? Почему в таком ужасном состоянии? А сколько игр в комплекте? А где блок питания? Совсем немного...`
-  }, {
-    "id": `ovj4b1`,
-    "text": `Почему в таком ужасном состоянии? Оплата наличными или перевод на карту? А сколько игр в комплекте? А где блок питания? Продаю в связи с переездом. Отрываю от сердца. Неплохо, но дорого. Совсем немного... Вы что?! В магазине дешевле. С чем связана продажа? Почему так дешёво?`
-  }, {
-    "id": `y3BSTM`,
-    "text": `С чем связана продажа? Почему так дешёво? А где блок питания? Оплата наличными или перевод на карту? Совсем немного... Почему в таком ужасном состоянии? Продаю в связи с переездом. Отрываю от сердца.`
-  }],
-}];
 
 /**
  * @return {Express}
@@ -108,7 +53,7 @@ test(`API returns code 404 if there is no offer with given id`, () => {
   const app = createAPI();
 
   return request(app)
-    .get(`/offers/PvNAFq`)
+    .get(`/offers/NO_EXIST`)
     .expect(HttpCode.NOT_FOUND);
 });
 
@@ -121,7 +66,7 @@ describe(`API creates an offer if data is valid`, () => {
   const newOffer = {
     title: `Научу программировать`,
     description: `Большой опыт разработки. Дружеское отношение. Духовное наставничество`,
-    category: `Обучение`,
+    categories: `Обучение`,
     picture: `item03.jpg`,
     type: `offer`,
     sum: 10000,
@@ -135,7 +80,7 @@ describe(`API creates an offer if data is valid`, () => {
 
   test(`Returns the created offer`, () => expect(response.body).toEqual(expect.objectContaining(newOffer)));
 
-  test(`The Offers number has changed`, () => request(app)
+  test(`The offers number has changed`, () => request(app)
     .get(`/offers`)
     .expect((res) => expect(res.body.length).toBe(4))
   );
@@ -164,7 +109,7 @@ describe(`API changes existent offer`, () => {
   const newOffer = {
     title: `Продам отличную подборку фильмов на VHS и DVD!`,
     description: `Это настоящая находка для коллекционера!`,
-    category: [`Игры`, `Книги`, `Новинки`, `Посуда`, `Разное`],
+    categories: [`Игры`, `Книги`, `Новинки`, `Посуда`, `Разное`],
     picture: `item08.jpg`,
     type: `sale`,
     sum: 33515,
@@ -204,7 +149,7 @@ test(`API returns status code 404 when trying to change non-existent offer`, () 
   const newOffer = {
     title: `Продам отличную подборку фильмов на VHS и DVD в несуществующем объявлении!`,
     description: `Это настоящая находка для коллекционера!`,
-    category: [`Игры`, `Книги`, `Новинки`, `Посуда`, `Разное`],
+    categories: [`Игры`, `Книги`, `Новинки`, `Посуда`, `Разное`],
     picture: `item08.jpg`,
     type: `sale`,
     sum: 33515,
@@ -254,9 +199,9 @@ describe(`API returns a list of comments to given offer`, () => {
 
   test(`Status code 200`, () => expect(response.statusCode).toBe(HttpCode.OK));
 
-  test(`returns list with 3 comments`, () => expect(response.body.length).toBe(3));
+  test(`Returns list with 3 comments`, () => expect(response.body.length).toBe(3));
 
-  test(`First comments's id is "7rwCb3"`, () => expect(response.body[0].id).toBe(`7rwCb3`));
+  test(`First comment's id is "7rwCb3"`, () => expect(response.body[0].id).toBe(`7rwCb3`));
 });
 
 

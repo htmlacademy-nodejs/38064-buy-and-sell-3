@@ -9,6 +9,27 @@ html(lang='ru')
     link(rel='stylesheet' href='/css/style.min.css')
 
   body
+    mixin ticketCardLabel(type)
+      span(class!=attributes.class || 'ticket-card__label') #{type === 'offer' ? 'Куплю' : 'Продам'}
+
+    mixin offerCard(offer)
+      div.ticket-card
+        div.ticket-card__img
+          img(src=`img/${offer.picture}` alt='')
+        div.ticket-card__info
+          +ticketCardLabel(offer.type)
+          div.ticket-card__categories
+            each category in offer.categories
+              // TODO добавить ссылку на категорию
+              a(href='#') #{category}
+          div.ticket-card__header
+            h3.ticket-card__title
+              a(href='#') #{offer.title}
+            p.ticket-card__price
+              span.js-sum #{offer.sum} ₽
+          div.ticket-card__desc
+            p #{offer.description}
+
     include header.pug
     block content
     include footer.pug

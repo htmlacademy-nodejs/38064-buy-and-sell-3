@@ -3,7 +3,7 @@
 const {HttpCode} = require(`../../utils/const`);
 
 
-const offerKeys = [`title`, `description`, `category`, `picture`, `type`, `sum`];
+const offerKeys = [`title`, `description`, `categories`, `picture`, `type`, `sum`];
 
 const offerValidator = (req, res, next) => {
   const newOffer = req.body;
